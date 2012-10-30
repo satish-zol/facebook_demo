@@ -2,12 +2,15 @@
 <ul class="nav">
   <% if user_signed_in? %>
     <li>
-    <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>        
+    <%= link_to 'Logout', destroy_user_session_path, :method=>'delete', :id => "sign_out" %>        
     </li>
   <% else %>
     <li>
     <%= link_to 'Login', new_user_session_path %>  
     </li>
+    <li>
+      <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), :id => "sign_in" %>
+    </li>  
   <% end %>
   <% if user_signed_in? %>
     <li>
@@ -24,3 +27,45 @@
     </li>
   <% end %>
 </ul>
+
+<div id="fb-root"></div>
+    <script>
+
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '215267491940472', // App ID
+            status     : true, // check login status
+            cookie     : true // enable cookies to allow the server to access the session
+        });
+        
+        FB.getLoginStatus(function(response) {
+	  if (response.status === 'connected') {
+	    // connected
+	  } else if (response.status === 'not_authorized') {
+	    // not_authorized
+	  } else {
+	    // not_logged_in
+	  }
+	});
+
+        $('#sign_in').click(function(e) {
+            e.preventDefault();
+            return FB.login(function(response) {
+                if (response.authResponse) {
+                    return window.location = '/auth/facebook/callback';
+                }
+            });
+        });
+
+        return $('#sign_out').click(function(e) {
+            FB.getLoginStatus(function(response) {
+                if (response.authResponse) {
+                    return FB.logout();
+                }
+            });
+            return true;
+        });
+    };
+ </script>
+
+ 
