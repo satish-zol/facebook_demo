@@ -122,9 +122,9 @@ GEM
     omniauth (1.1.1)
       hashie (~> 1.2)
       rack
-    omniauth-facebook (1.4.1)
-      omniauth-oauth2 (~> 1.1.0)
-    omniauth-oauth2 (1.1.1)
+    omniauth-facebook (1.4.0)
+      omniauth-oauth2 (~> 1.0.2)
+    omniauth-oauth2 (1.0.3)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
     orm_adapter (0.4.0)
@@ -223,9 +223,7 @@ DEPENDENCIES
   jquery-rails
   launchy (>= 2.1.2)
   mysql2 (>= 0.3.11)
-  oauth2
-  omniauth
-  omniauth-facebook
+  omniauth-facebook (= 1.4.0)
   rails (= 3.2.8)
   rolify (>= 3.2.0)
   rspec-rails (>= 2.11.4)

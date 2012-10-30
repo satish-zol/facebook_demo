@@ -29,43 +29,48 @@
 </ul>
 
 <div id="fb-root"></div>
-    <script>
 
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '215267491940472', // App ID
-            status     : true, // check login status
-            cookie     : true // enable cookies to allow the server to access the session
-        });
-        
-        FB.getLoginStatus(function(response) {
-	  if (response.status === 'connected') {
-	    // connected
-	  } else if (response.status === 'not_authorized') {
-	    // not_authorized
-	  } else {
-	    // not_logged_in
-	  }
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '215267491940472',
+      status     : true,
+      channelURL : 'http://localhost:3000/channel.html',
+      cookie     : true,
+      oauth      : true,
+      xfbml      : true
+    });
+  };
+ 
+  $('#sign_in').click(function(e) {
+    e.preventDefault();
+    FB.login(function(response) {
+      if (response.authResponse) {
+	console.log('Welcome!  Fetching your information.... ');
+	window.location = '/auth/facebook/callback';
+	FB.api('/me', function(response) {
+	  console.log('Good to see you, ' + response.name + respone.email +  +  +  +  +  +  +  +  +  +'.');
 	});
-
-        $('#sign_in').click(function(e) {
-            e.preventDefault();
-            return FB.login(function(response) {
-                if (response.authResponse) {
-                    return window.location = '/auth/facebook/callback';
-                }
-            });
-        });
-
-        return $('#sign_out').click(function(e) {
-            FB.getLoginStatus(function(response) {
-                if (response.authResponse) {
-                    return FB.logout();
-                }
-            });
-            return true;
-        });
-    };
- </script>
-
+      } else {
+	  console.log('User cancelled login or did not fully authorize.');
+      }
+    }, {scope: 'email'});
+  });
+  
+  $('#sign_out').click(function(){
+    FB.api('/me', function(response) {
+      console.log('Good to see you, ' + response.name + '.');
+      FB.logout(function(response) {
+        console.log('Logged out.');
+      });
+    });
+  });
+ 
+  (function() {
+    var e = document.createElement('script'); e.async = true;
+    e.src = document.location.protocol 
+    + '//connect.facebook.net/en_US/all.js';
+    document.getElementById('fb-root').appendChild(e);
+  }());
+</script>
  

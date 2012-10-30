@@ -5,8 +5,8 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
   config.mailer_sender = "admin@moodyon.com"
-  require "omniauth-facebook"
-  config.omniauth :facebook, "215267491940472", "1da1c4b90dc21f68f776a2174b39d943"
+  
+  config.omniauth :facebook, "215267491940472", "1da1c4b90dc21f68f776a2174b39d943", :scope => 'email', :client_options => {:ssl => {:ca_path => '/etc/ssl/certs'}}
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
